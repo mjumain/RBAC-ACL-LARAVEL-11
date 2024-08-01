@@ -85,6 +85,14 @@
         var url = "routes";
         var csrf = "{{ csrf_token() }}";
 
+        var resetform = function() {
+            $("#formdata").trigger('reset')
+            $('#savedata').val('create')
+            $('#dataID').val('')
+            $('#dataroute').empty();
+            $('#datapermission').empty();
+        }
+
 
         $('body').on('click', '.editdata', function() {
             var id = $(this).data('id');
@@ -94,12 +102,12 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.success == true) {
+                        resetform()
+
                         // console.log(response.data.route);
                         $('#savedata').val('edit');
                         $('#modalForm').modal('show')
                         $('#dataID').val(response.data.route.id)
-
-                        $('#dataroute').empty();
 
                         var html = ''
                         response.data.routes.forEach((element, index, array) => {
@@ -141,9 +149,9 @@
                 type: "GET",
                 dataType: 'json',
                 success: function(response) {
+                    resetform();
                     // console.log(response.data);
 
-                    $('#dataroute').empty();
                     var html = ''
                     response.data.routes.forEach((element, index, array) => {
                         if (element.action.as) {
@@ -155,7 +163,6 @@
                     });
                     $('#dataroute').append(html);
 
-                    $('#datapermission').empty();
                     var html = ''
                     response.data.permissions.forEach((element, index, array) => {
                         if (element.name) {

@@ -30,7 +30,7 @@ class MenuController extends Controller
     {
         $datas["permissions"] = Permission::orderBy('name', 'ASC')->get();
         $datas["routes"] = FacadesRoute::getRoutes()->get();
-        $datas["menus"] = Menu::orderBy('name', 'ASC')->get();
+        $datas["menus"] = Menu::where('parent_id', 0)->orderBy('name', 'ASC')->get();
         return response()->json([
             'success' => true,
             'data' => $datas
@@ -88,7 +88,7 @@ class MenuController extends Controller
     {
         $datas["permissions"] = Permission::orderBy('name', 'ASC')->get();
         $datas["routes"] = FacadesRoute::getRoutes()->get();
-        $datas["menus"] = Menu::orderBy('name', 'ASC')->get();
+        $datas["menus"] = Menu::where('parent_id', 0)->orderBy('name', 'ASC')->get();
         $datas["menu"] = Menu::findOrfail($id);
         return response()->json([
             'success' => true,

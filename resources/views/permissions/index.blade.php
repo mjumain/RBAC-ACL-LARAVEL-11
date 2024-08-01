@@ -13,7 +13,7 @@
                 <div class="card-header d-flex p-0">
                     <h1 class="card-title p-3">Data Permission Pengguna</h1>
                     <ul class="nav nav-pills ml-auto p-2">
-                        <li class="nav-item"><a class="nav-link active btn-sm" href="#" data-toggle="modal"
+                        <li class="nav-item"><a class="nav-link active btn-sm" href="#" id="tambahdata" data-toggle="modal"
                                 data-target="#modalForm">Tambah Data</a></li>
                     </ul>
                 </div><!-- /.card-header -->
@@ -120,6 +120,14 @@
         var url = "permissions";
         var csrf = "{{ csrf_token() }}";
 
+        var resetform = function() {
+            $("#formdata").trigger('reset')
+            $('#savedata').val('create')
+            $('#dataID').val('')
+            $('#name').val('');
+            $('#permission').show();
+        }
+
         $('body').on('click', '.editdata', function() {
             var id = $(this).data('id');
             $.ajax({
@@ -128,6 +136,8 @@
                 dataType: 'json',
                 success: function(data) {
                     if (data.success == true) {
+                        resetform()
+
                         $('#savedata').val('edit');
                         $('#modalForm').modal('show')
                         $('#dataID').val(data.data.id)
@@ -136,6 +146,10 @@
                     }
                 }
             });
+        });
+
+        $('body').on('click', '#tambahdata', function() {
+            resetform()
         });
 
         var table = $('.data-table').DataTable({

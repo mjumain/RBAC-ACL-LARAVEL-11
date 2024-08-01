@@ -86,6 +86,11 @@
         var url = "users";
         var csrf = "{{ csrf_token() }}";
 
+        var resetform = function() {
+            $("#formdata").trigger('reset')
+            $('#savedata').val('create')
+        }
+
 
         $('body').on('click', '.editdata', function() {
             var id = $(this).data('id');
@@ -95,7 +100,8 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.success == true) {
-                        console.log(response.data.user);
+                        resetform()
+                        // console.log(response.data.role);
                         $('#savedata').val('edit')
                         $('#modalForm').modal('show')
                         $('#dataID').val(response.data.user.id)
@@ -134,7 +140,7 @@
                 dataType: 'json',
                 success: function(response) {
                     // console.log(response.data);
-
+                    resetform()
                     $('#datarole').empty();
                     var html = ''
                     response.data.roles.forEach((element, index, array) => {

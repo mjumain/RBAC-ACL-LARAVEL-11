@@ -48,7 +48,8 @@ class UserController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Data berhasil disimpan'
+                'message' => 'Data berhasil disimpan',
+                'data' => $request->role
             ]);
         } catch (\Throwable $th) {
             return response()->json([
@@ -69,7 +70,7 @@ class UserController extends Controller
             $datas->email_verified_at = !blank($request->verified) ? now() : null;
             $datas->update();
 
-            $datas->assignRole(!blank($request->role) ? $request->role : array());
+            $datas->syncRoles(!blank($request->role) ? $request->role : array());
 
             return response()->json([
                 'success' => true,
@@ -86,7 +87,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $user = User::find(1);
+        $user = User::find($id);
         $datas['role'] = $user->getRoleNames()->toArray();
         $datas["roles"] = Role::orderBy('name', 'ASC')->get();
         $datas["user"] = User::findOrfail($id);

@@ -96,6 +96,17 @@
         var url = "menus";
         var csrf = "{{ csrf_token() }}";
 
+        var resetform = function() {
+            $("#formdata").trigger('reset')
+            $('#savedata').val('create')
+            $('#dataID').val('')
+            $('#name').val('');
+            $('#icon').val('');
+            $('#dataroute').empty();
+            $('#dataparent').empty();
+
+        }
+
         $('body').on('click', '.editdata', function() {
             var id = $(this).data('id');
             $.ajax({
@@ -104,6 +115,7 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.success == true) {
+                        resetform()
                         // console.log(response.data);
                         $('#savedata').val('edit');
                         $('#modalForm').modal('show')
@@ -111,7 +123,6 @@
                         $('#name').val(response.data.menu.name)
                         $('#icon').val(response.data.menu.icon)
 
-                        $('#dataroute').empty();
                         var html = '<option value="#">#</option>'
                         response.data.routes.forEach((element, index, array) => {
                             if (element.action.as) {
@@ -127,7 +138,6 @@
                         });
                         $('#dataroute').append(html);
 
-                        $('#dataparent').empty();
                         var html = '<option value="0">PARENT MENU</option>'
                         response.data.menus.forEach((element, index, array) => {
                             if (element.name) {
@@ -152,7 +162,8 @@
                 type: "GET",
                 dataType: 'json',
                 success: function(response) {
-                    $('#dataroute').empty();
+                    resetform();
+
                     var html = '<option value="#">#</option>'
                     console.log(response.data.routes);
                     response.data.routes.forEach((element, index, array) => {
@@ -166,7 +177,6 @@
                     });
                     $('#dataroute').append(html);
 
-                    $('#dataparent').empty();
                     var html = '<option value="0">PARENT MENU</option>'
                     response.data.menus.forEach((element, index, array) => {
                         if (element.name) {

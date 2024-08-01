@@ -12,7 +12,6 @@ $(function () {
                 dataType: 'json',
                 success: function (data) {
                     if (data.success == true) {
-                        $('#formdata').trigger("reset");
                         $('#modalForm').modal('hide');
                         table.draw();
                         $('#savedata').html('Simpan');
@@ -36,14 +35,12 @@ $(function () {
                 dataType: 'json',
                 success: function (response) {
                     if (response.success == true) {
-                        $('#formdata').trigger("reset");
                         $('#savedata').html('Simpan');
                         table.draw();
                         success(response.message);
                         $('#modalForm').modal('hide');
                     } else {
                         error(response.message);
-                        $('#formdata').trigger("reset");
                         console.log('Error:', response.error);
                     }
                 },

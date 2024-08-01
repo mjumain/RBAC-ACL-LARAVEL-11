@@ -84,6 +84,14 @@
         var url = "roles";
         var csrf = "{{ csrf_token() }}";
 
+        var resetform = function() {
+            $("#formdata").trigger('reset')
+            $('#savedata').val('create')
+            $('#dataID').val('')
+            $('#name').val('');
+            $('#guard_name').val('');
+        }
+
 
         $('body').on('click', '.editdata', function() {
             var id = $(this).data('id');
@@ -93,6 +101,7 @@
                 dataType: 'json',
                 success: function(data) {
                     if (data.success == true) {
+                        resetform()
                         // console.log(data);
                         $('#savedata').val('edit');
                         $('#modalForm').modal('show')
@@ -126,6 +135,7 @@
                 type: "GET",
                 dataType: 'json',
                 success: function(data) {
+                    resetform()
                     // console.log(data.data);
                     var html = ''
                     data.data.forEach((element, index, array) => {
