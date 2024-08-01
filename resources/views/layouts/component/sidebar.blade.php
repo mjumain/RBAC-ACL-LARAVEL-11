@@ -21,7 +21,8 @@
             @foreach (MenuHelper::Menu() as $item)
                 @if (count($item->submenus) > 0)
                     <li class="nav-item menu-open">
-                        <a href="#" class="nav-link {{ Route::currentRouteName() == $item->route ? 'active' : '' }}">
+                        <a href="#"
+                            class="nav-link {{ Route::currentRouteName() == $item->route ? 'active' : '' }}">
                             <i class="nav-icon fas fa-cogs"></i>
                             <p>
                                 {{ $item->name }}
@@ -30,13 +31,15 @@
                         </a>
                         <ul class="nav nav-treeview">
                             @foreach ($item->submenus as $value)
-                                <li class="nav-item">
-                                    <a href="{{ route($value->route) }}"
-                                        class="nav-link {{ Route::currentRouteName() == $value->route ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>{{ $value->name }}</p>
-                                    </a>
-                                </li>
+                                @if (in_array($value->routes->permission_name, MenuHelper::Permissions()))
+                                    <li class="nav-item">
+                                        <a href="{{ route($value->route) }}"
+                                            class="nav-link {{ Route::currentRouteName() == $value->route ? 'active' : '' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>{{ $value->name }}</p>
+                                        </a>
+                                    </li>
+                                @endif
                             @endforeach
                         </ul>
                     </li>
