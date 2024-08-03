@@ -22,8 +22,8 @@ $(function () {
                     }
                 },
                 error: function (data) {
-                    // console.log('Error:', data.error);
                     $('#save').html('Simpan');
+                    // console.log('Error:', data.error);
                 }
             });
         } else if ($(this).val() === 'create') {
@@ -37,7 +37,7 @@ $(function () {
                     if (response.success == true) {
                         $('#savedata').html('Simpan');
                         table.draw();
-                        success(response.message);
+                        // success(response.message);
                         $('#modalForm').modal('hide');
                     } else {
                         error(response.message);

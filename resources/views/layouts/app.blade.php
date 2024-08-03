@@ -36,9 +36,9 @@
         </div>
         <footer class="main-footer">
             <div class="float-right d-none d-sm-inline">
-                Anything you want
+                Versi 24.8.1
             </div>
-            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
+            Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>. All rights
             reserved.
         </footer>
     </div>

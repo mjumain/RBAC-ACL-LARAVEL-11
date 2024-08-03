@@ -64,7 +64,7 @@
                     </form>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" id="close" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" id="savedata" value="create">Simpan</button>
                 </div>
             </div>
@@ -138,6 +138,9 @@
                                 '</option>'
                         });
                         $('#datapermission').append(html);
+                    } else {
+                        resetform();
+                        window.location.href = "401";
                     }
                 }
             });
@@ -149,30 +152,35 @@
                 type: "GET",
                 dataType: 'json',
                 success: function(response) {
-                    resetform();
-                    // console.log(response.data);
+                    if (response.success == true) {
+                        resetform();
 
-                    var html = ''
-                    response.data.routes.forEach((element, index, array) => {
-                        if (element.action.as) {
-                            html = html +
-                                '<option value="' + element.action.as + '">' + element.action
-                                .as + '</option>'
+                        var html = ''
+                        response.data.routes.forEach((element, index, array) => {
+                            if (element.action.as) {
+                                html = html +
+                                    '<option value="' + element.action.as + '">' + element
+                                    .action
+                                    .as + '</option>'
 
-                        }
-                    });
-                    $('#dataroute').append(html);
+                            }
+                        });
+                        $('#dataroute').append(html);
 
-                    var html = ''
-                    response.data.permissions.forEach((element, index, array) => {
-                        if (element.name) {
-                            html = html +
-                                '<option value="' + element.name + '">' + element.name +
-                                '</option>'
+                        var html = ''
+                        response.data.permissions.forEach((element, index, array) => {
+                            if (element.name) {
+                                html = html +
+                                    '<option value="' + element.name + '">' + element.name +
+                                    '</option>'
 
-                        }
-                    });
-                    $('#datapermission').append(html);
+                            }
+                        });
+                        $('#datapermission').append(html);
+                    } else {
+                        resetform();
+                        window.location.href = "401";
+                    }
                 }
             });
         });

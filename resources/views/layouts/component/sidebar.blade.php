@@ -18,41 +18,52 @@
     @endphp
     <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item">
+                <a href="{{ url('/home') }}" class="nav-link {{ Route::is('home') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Beranda
+                    </p>
+                </a>
+            </li>
             @foreach (MenuHelper::Menu() as $item)
-                @if (count($item->submenus) > 0)
-                    <li class="nav-item menu-open">
-                        <a href="#"
-                            class="nav-link {{ Route::currentRouteName() == $item->route ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-cogs"></i>
-                            <p>
-                                {{ $item->name }}
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            @foreach ($item->submenus as $value)
-                                @if (in_array($value->routes->permission_name, MenuHelper::Permissions()))
-                                    <li class="nav-item">
-                                        <a href="{{ route($value->route) }}"
-                                            class="nav-link {{ Route::currentRouteName() == $value->route ? 'active' : '' }}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>{{ $value->name }}</p>
-                                        </a>
-                                    </li>
-                                @endif
-                            @endforeach
-                        </ul>
-                    </li>
-                @else
-                    <li class="nav-item">
-                        <a href="{{ route($item->route) }}"
-                            class="nav-link {{ Route::currentRouteName() == $item->route ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-th"></i>
-                            <p>
-                                {{ $item->name }}
-                            </p>
-                        </a>
-                    </li>
+                @if (isset($item['menu']->submenus))
+                    @if (count($item['menu']->submenus) > 0)
+                        <li
+                            class="nav-item {{ in_array(Route::currentRouteName(), $item['route']) ? 'menu-open' : '' }}">
+                            <a href="#"
+                                class="nav-link {{ in_array(Route::currentRouteName(), $item['route']) ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-cogs"></i>
+                                <p>
+                                    {{ $item['menu']->name }}
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                @foreach ($item['menu']->submenus as $value)
+                                    @if (in_array($value->routes->permission_name, MenuHelper::Permissions()))
+                                        <li class="nav-item">
+                                            <a href="{{ route($value->route) }}"
+                                                class="nav-link {{ Route::currentRouteName() == $value->route ? 'active' : '' }}">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>{{ $value->name }}</p>
+                                            </a>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a href="{{ route($item['menu']->route) }}"
+                                class="nav-link {{ in_array(Route::currentRouteName(), $item['route']) ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    {{ $item['menu']->name }}
+                                </p>
+                            </a>
+                        </li>
+                    @endif
                 @endif
             @endforeach
         </ul>

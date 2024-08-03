@@ -151,6 +151,9 @@
                             }
                         });
                         $('#dataparent').append(html);
+                    } else {
+                        resetform();
+                        window.location.href = "401";
                     }
                 }
             });
@@ -162,31 +165,37 @@
                 type: "GET",
                 dataType: 'json',
                 success: function(response) {
-                    resetform();
+                    if (response.success == true) {
+                        resetform();
 
-                    var html = '<option value="#">#</option>'
-                    console.log(response.data.routes);
-                    response.data.routes.forEach((element, index, array) => {
-                        if (element.action.as) {
-                            html = html +
-                                '<option value="' + element.action.as + '">' + element.action
-                                .as +
-                                '</option>'
+                        var html = '<option value="#">#</option>'
+                        console.log(response.data.routes);
+                        response.data.routes.forEach((element, index, array) => {
+                            if (element.action.as) {
+                                html = html +
+                                    '<option value="' + element.action.as + '">' + element
+                                    .action
+                                    .as +
+                                    '</option>'
 
-                        }
-                    });
-                    $('#dataroute').append(html);
+                            }
+                        });
+                        $('#dataroute').append(html);
 
-                    var html = '<option value="0">PARENT MENU</option>'
-                    response.data.menus.forEach((element, index, array) => {
-                        if (element.name) {
-                            html = html +
-                                '<option value="' + element.id + '">' + element.name +
-                                '</option>'
+                        var html = '<option value="0">PARENT MENU</option>'
+                        response.data.menus.forEach((element, index, array) => {
+                            if (element.name) {
+                                html = html +
+                                    '<option value="' + element.id + '">' + element.name +
+                                    '</option>'
 
-                        }
-                    });
-                    $('#dataparent').append(html);
+                            }
+                        });
+                        $('#dataparent').append(html);
+                    } else {
+                        resetform();
+                        window.location.href = "401";
+                    }
                 }
             });
         });

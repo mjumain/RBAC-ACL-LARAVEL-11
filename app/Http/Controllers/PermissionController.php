@@ -27,7 +27,6 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         try {
-
             if (!empty($request->permission) > 0) {
                 $guard_name = empty($request->guard_name) ? 'web' : $request->guard_name;
                 foreach ($request->permission as $key => $value) {
@@ -53,6 +52,13 @@ class PermissionController extends Controller
                 'error' => $th->getMessage(),
             ]);
         }
+    }
+
+    public function create()
+    {
+        return response()->json([
+            'success' => true,
+        ]);
     }
 
     public function update(Request $request)

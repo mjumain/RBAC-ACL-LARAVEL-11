@@ -13,8 +13,8 @@
                 <div class="card-header d-flex p-0">
                     <h1 class="card-title p-3">Data Permission Pengguna</h1>
                     <ul class="nav nav-pills ml-auto p-2">
-                        <li class="nav-item"><a class="nav-link active btn-sm" href="#" id="tambahdata" data-toggle="modal"
-                                data-target="#modalForm">Tambah Data</a></li>
+                        <li class="nav-item"><a class="nav-link active btn-sm" href="#" id="tambahdata"
+                                data-toggle="modal" data-target="#modalForm">Tambah Data</a></li>
                     </ul>
                 </div><!-- /.card-header -->
                 <div class="card-body">
@@ -143,13 +143,28 @@
                         $('#dataID').val(data.data.id)
                         $('#name').val(data.data.name)
                         $('#permission').hide();
+                    } else {
+                        resetform();
+                        window.location.href = "401";
                     }
                 }
             });
         });
 
         $('body').on('click', '#tambahdata', function() {
-            resetform()
+            $.ajax({
+                url: `/${url}/create`,
+                type: "GET",
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success == true) {
+                        resetform()
+                    } else {
+                        resetform();
+                        window.location.href = "401";
+                    }
+                }
+            });
         });
 
         var table = $('.data-table').DataTable({

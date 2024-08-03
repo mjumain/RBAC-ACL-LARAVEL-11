@@ -18,10 +18,10 @@ class CekAksesMiddleware
     {
         $routes = Route::firstWhere('route', $request->route()?->getName());
 
-        return blank($routes) || $request->user()->can($routes->permission_name)
-            ? $next($request)
-            : abort(401);
-
-        // return $next($request);
+        return (blank($routes) || $request->user()->can($routes->permission_name))
+            ? $next($request)  : ($request->ajax() ? response()->json([
+                'success' => false,
+                'data' => 'Unauthorized'
+            ]) : redirect()->to('401'));
     }
 }

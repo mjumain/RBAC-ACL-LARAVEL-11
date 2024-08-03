@@ -40,8 +40,12 @@
         </li>
         <li class="nav-item dropdown user-menu">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                <span class="d-none d-md-inline"><strong>Hi, @auth
+                <span class="d-none d-md-inline">
+                    <strong>Hi,
+                        @auth
                             {{ Auth::user()->name }}
+                        @else
+                            Undefined
                         @endauth
                     </strong>
                 </span>
@@ -52,12 +56,15 @@
                     <img src="{{ asset('') }}assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2"
                         alt="User Image">
                     <p>
-                        Alexander Pierce - Web Developer
-                        <small>Member since Nov. 2012</small>
+                        @auth
+                            {{ Auth::user()->name }}
+                        @else
+                            Undefined
+                        @endauth
                     </p>
                 </li>
                 <li class="user-footer">
-                    <a href="#" class="btn btn-default btn-flat">Pengaturan</a>
+                    <a href="{{ url('profile') }}" class="btn btn-default btn-flat">Profil</a>
                     <a href="{{ route('logout') }}" class="btn btn-default btn-flat float-right"
                         onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
                         Keluar

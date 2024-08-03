@@ -36,7 +36,7 @@
     </div>
 
     <div class="modal fade" id="modalForm">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Default Modal</h5>
@@ -124,6 +124,9 @@
                                 '">' + element.name + '</label></div>'
                         });
                         document.getElementById("datapermission").innerHTML = html
+                    } else {
+                        resetform();
+                        window.location.href = "401";
                     }
                 }
             });
@@ -135,20 +138,26 @@
                 type: "GET",
                 dataType: 'json',
                 success: function(data) {
-                    resetform()
-                    // console.log(data.data);
-                    var html = ''
-                    data.data.forEach((element, index, array) => {
-                        html = html +
-                            '<div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">' +
-                            '<input type="checkbox" name="permissions[]" value="' + element
-                            .name + '" class="custom-control-input" id="' + element.name +
-                            '">' +
-                            '<label class="custom-control-label" for="' + element.name +
-                            '">' + element.name + '</label>' +
-                            '</div>'
-                    });
-                    document.getElementById("datapermission").innerHTML = html
+                    if (data.success == true) {
+                        resetform()
+                        // console.log(data.data);
+                        var html = ''
+                        data.data.forEach((element, index, array) => {
+                            html = html +
+                                '<div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">' +
+                                '<input type="checkbox" name="permissions[]" value="' + element
+                                .name + '" class="custom-control-input" id="' + element.name +
+                                '">' +
+                                '<label class="custom-control-label" for="' + element.name +
+                                '">' + element.name + '</label>' +
+                                '</div>'
+                        });
+                        document.getElementById("datapermission").innerHTML = html
+                    } else {
+                        resetform();
+                        window.location.href = "401";
+                    }
+
                 }
             });
         });
