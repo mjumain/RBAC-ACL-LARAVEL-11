@@ -41,7 +41,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 @foreach ($item['menu']->submenus as $value)
-                                    @if (in_array($value->routes->permission_name, MenuHelper::Permissions()))
+                                    @if (in_array($value->routes->permission_name ?? '', MenuHelper::Permissions()))
                                         <li class="nav-item">
                                             <a href="{{ route($value->route) }}"
                                                 class="nav-link {{ Route::currentRouteName() == $value->route ? 'active' : '' }}">
