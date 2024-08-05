@@ -11,15 +11,12 @@ class MenuHelper
     public static function Menu()
     {
         $menus = Menu::with('submenus')->where('parent_id', 0)->orderBy('name', 'ASC')->get();
-        // dd($menus);
-        // dd(!empty($menus));
         if (count($menus) > 0) {
             foreach ($menus as $key => $value) {
                 $data['route'] = [];
                 if (count($value->submenus) > 0 && $value->route == '#') {
                     $data['menu'] = $value;
                     foreach ($value->submenus as $item) {
-                        // dd(self::Permissions());
                         if (in_array($item->routes->permission_name ?? '', self::Permissions())) {
                             $data['route'][] = $item->route;
                         }
@@ -37,7 +34,6 @@ class MenuHelper
             $data['menu'] = [];
             $cetak[] = $data;
         }
-        // dd($cetak);
 
         return $cetak;
     }

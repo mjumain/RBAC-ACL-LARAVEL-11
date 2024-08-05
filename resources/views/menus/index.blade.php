@@ -58,7 +58,7 @@
                                 placeholder="Menu Name">
                         </div>
                         <div class="form-group">
-                            <label>Menu Icon</label>
+                            <label>Menu Icon <code><a href="https://fontawesome.com/v5/search?q=home&o=r&m=free" target="_blank" rel="noopener noreferrer">Daftar icon</a></code></label>
                             <input type="email" class="form-control" id="icon" name="icon"
                                 placeholder="Menu Icon">
                         </div>

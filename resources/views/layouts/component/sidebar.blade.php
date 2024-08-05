@@ -20,7 +20,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
                 <a href="{{ url('/home') }}" class="nav-link {{ Route::is('home') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-th"></i>
+                    <i class="nav-icon fas fa-home"></i>
                     <p>
                         Beranda
                     </p>
@@ -33,7 +33,7 @@
                             class="nav-item {{ in_array(Route::currentRouteName(), $item['route']) ? 'menu-open' : '' }}">
                             <a href="#"
                                 class="nav-link {{ in_array(Route::currentRouteName(), $item['route']) ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-cogs"></i>
+                                <i class="nav-icon {{ $item['menu']->icon }}"></i>
                                 <p>
                                     {{ $item['menu']->name }}
                                     <i class="right fas fa-angle-left"></i>
@@ -57,7 +57,7 @@
                         <li class="nav-item">
                             <a href="{{ route($item['menu']->route) }}"
                                 class="nav-link {{ in_array(Route::currentRouteName(), $item['route']) ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon {{ $item['menu']->icon }}"></i>
                                 <p>
                                     {{ $item['menu']->name }}
                                 </p>

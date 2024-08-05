@@ -64,8 +64,8 @@
                     </p>
                 </li>
                 <li class="user-footer">
-                    <a href="{{ url('profile') }}" class="btn btn-default btn-flat">Profil</a>
-                    <a href="{{ route('logout') }}" class="btn btn-default btn-flat float-right"
+                    <a href="{{ url('profile') }}" class="btn btn-default">Pengaturan</a>
+                    <a href="{{ route('logout') }}" class="btn btn-default float-right"
                         onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
                         Keluar
                     </a>
