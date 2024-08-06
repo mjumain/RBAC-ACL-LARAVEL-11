@@ -9,13 +9,14 @@ class Menu extends Model
 {
     use HasFactory;
 
+
+    public function submenus()
+    {
+        return $this->hasMany(Menu::class, 'parent_id', 'id', Route::class, 'route', 'route');
+    }
     public function routes()
     {
         return $this->belongsTo(Route::class, 'route', 'route');
-    }
-    public function submenus()
-    {
-        return $this->hasMany(Menu::class, 'parent_id', 'id');
     }
     public function parent()
     {

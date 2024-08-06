@@ -54,15 +54,17 @@
                             </ul>
                         </li>
                     @else
-                        <li class="nav-item">
-                            <a href="{{ route($item['menu']->route) }}"
-                                class="nav-link {{ in_array(Route::currentRouteName(), $item['route']) ? 'active' : '' }}">
-                                <i class="nav-icon {{ $item['menu']->icon }}"></i>
-                                <p>
-                                    {{ $item['menu']->name }}
-                                </p>
-                            </a>
-                        </li>
+                        @if (in_array($item['menu']->routes->permission_name ?? '', MenuHelper::Permissions()))
+                            <li class="nav-item">
+                                <a href="{{ route($item['menu']->route) }}"
+                                    class="nav-link {{ in_array(Route::currentRouteName(), $item['route']) ? 'active' : '' }}">
+                                    <i class="nav-icon {{ $item['menu']->icon }}"></i>
+                                    <p>
+                                        {{ $item['menu']->name }}
+                                    </p>
+                                </a>
+                            </li>
+                        @endif
                     @endif
                 @endif
             @endforeach

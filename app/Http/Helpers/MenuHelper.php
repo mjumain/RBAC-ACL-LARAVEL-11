@@ -17,9 +17,7 @@ class MenuHelper
                 if (count($value->submenus) > 0 && $value->route == '#') {
                     $data['menu'] = $value;
                     foreach ($value->submenus as $item) {
-                        if (in_array($item->routes->permission_name ?? '', self::Permissions())) {
-                            $data['route'][] = $item->route;
-                        }
+                        $data['route'][] = $item->route;
                     }
                     if (empty($data['route'])) {
                         $data['menu'] = [];
