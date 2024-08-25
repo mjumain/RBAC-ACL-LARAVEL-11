@@ -54,12 +54,12 @@ class MasterSettingSeeder extends Seeder
         $user->assignRole('admin');
 
         $menus = [
-            ['name' => 'Settings', 'icon' => 'web', 'parent_id' => '0', 'posision' => '0', 'route' => '#'],
-            ['name' => 'Permissions', 'icon' => 'web', 'parent_id' => '1', 'posision' => '0', 'route' => 'permissions.index'],
-            ['name' => 'Roles', 'icon' => 'web', 'parent_id' => '1', 'posision' => '0', 'route' => 'roles.index'],
-            ['name' => 'Menus', 'icon' => 'web', 'parent_id' => '1', 'posision' => '0', 'route' => 'menus.index'],
-            ['name' => 'Users', 'icon' => 'web', 'parent_id' => '1', 'posision' => '0', 'route' => 'users.index'],
-            ['name' => 'Routes', 'icon' => 'web', 'parent_id' => '1', 'posision' => '0', 'route' => 'routes.index'],
+            ['name' => 'Settings', 'icon' => '<i class="nav-icon fas fa-cogs"></i>', 'parent_id' => '0', 'posision' => '0', 'route' => '#'],
+            ['name' => 'Permissions', 'icon' => 'default', 'parent_id' => '1', 'posision' => '0', 'route' => 'permissions.index'],
+            ['name' => 'Roles', 'icon' => 'default', 'parent_id' => '1', 'posision' => '0', 'route' => 'roles.index'],
+            ['name' => 'Menus', 'icon' => 'default', 'parent_id' => '1', 'posision' => '0', 'route' => 'menus.index'],
+            ['name' => 'Users', 'icon' => 'default', 'parent_id' => '1', 'posision' => '0', 'route' => 'users.index'],
+            ['name' => 'Routes', 'icon' => 'default', 'parent_id' => '1', 'posision' => '0', 'route' => 'routes.index'],
         ];
         Menu::insert($menus);
 
