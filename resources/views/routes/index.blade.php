@@ -101,46 +101,48 @@
                 type: "GET",
                 dataType: 'json',
                 success: function(response) {
-                    if (response.success == true) {
-                        resetform()
+                    resetform()
 
-                        // console.log(response.data.route);
-                        $('#savedata').val('edit');
-                        $('#modalForm').modal('show')
-                        $('#dataID').val(response.data.route.id)
+                    // console.log(response.data.route);
+                    $('#savedata').val('edit');
+                    $('#modalForm').modal('show')
+                    $('#dataID').val(response.data.route.id)
 
-                        var html = ''
-                        response.data.routes.forEach((element, index, array) => {
-                            var checked = (element.action.as == response.data.route.route) ?
-                                'selected' : '';
+                    var html = ''
+                    response.data.routes.forEach((element, index, array) => {
+                        var checked = (element.action.as == response.data.route.route) ?
+                            'selected' : '';
 
-                            if (element.action.as) {
-                                html = html +
-                                    '<option ' + checked + ' value="' + element.action.as +
-                                    '">' + element
-                                    .action
-                                    .as + '</option>'
-                            }
-
-                        });
-                        $('#dataroute').append(html);
-
-
-                        $('#datapermission').empty();
-                        var html = ''
-                        response.data.permissions.forEach((element, index, array) => {
-                            var checked = (element.name == response.data.route
-                                    .permission_name) ?
-                                'selected' : '';
+                        if (element.action.as) {
                             html = html +
-                                '<option ' + checked + ' value="' + element.name + '">' +
-                                element.name +
-                                '</option>'
-                        });
-                        $('#datapermission').append(html);
+                                '<option ' + checked + ' value="' + element.action.as +
+                                '">' + element
+                                .action
+                                .as + '</option>'
+                        }
+
+                    });
+                    $('#dataroute').append(html);
+
+
+                    $('#datapermission').empty();
+                    var html = ''
+                    response.data.permissions.forEach((element, index, array) => {
+                        var checked = (element.name == response.data.route
+                                .permission_name) ?
+                            'selected' : '';
+                        html = html +
+                            '<option ' + checked + ' value="' + element.name + '">' +
+                            element.name +
+                            '</option>'
+                    });
+                    $('#datapermission').append(html);
+                },
+                error: function(data) {
+                    if (data.status === 401) {
+                        window.location.href = '401';
                     } else {
-                        resetform();
-                        window.location.href = "401";
+                        alert('Terjadi kesalahan: ' + data.statusText);
                     }
                 }
             });
@@ -152,34 +154,36 @@
                 type: "GET",
                 dataType: 'json',
                 success: function(response) {
-                    if (response.success == true) {
-                        resetform();
+                    resetform();
 
-                        var html = ''
-                        response.data.routes.forEach((element, index, array) => {
-                            if (element.action.as) {
-                                html = html +
-                                    '<option value="' + element.action.as + '">' + element
-                                    .action
-                                    .as + '</option>'
+                    var html = ''
+                    response.data.routes.forEach((element, index, array) => {
+                        if (element.action.as) {
+                            html = html +
+                                '<option value="' + element.action.as + '">' + element
+                                .action
+                                .as + '</option>'
 
-                            }
-                        });
-                        $('#dataroute').append(html);
+                        }
+                    });
+                    $('#dataroute').append(html);
 
-                        var html = ''
-                        response.data.permissions.forEach((element, index, array) => {
-                            if (element.name) {
-                                html = html +
-                                    '<option value="' + element.name + '">' + element.name +
-                                    '</option>'
+                    var html = ''
+                    response.data.permissions.forEach((element, index, array) => {
+                        if (element.name) {
+                            html = html +
+                                '<option value="' + element.name + '">' + element.name +
+                                '</option>'
 
-                            }
-                        });
-                        $('#datapermission').append(html);
+                        }
+                    });
+                    $('#datapermission').append(html);
+                },
+                error: function(data) {
+                    if (data.status === 401) {
+                        window.location.href = '401';
                     } else {
-                        resetform();
-                        window.location.href = "401";
+                        alert('Terjadi kesalahan: ' + data.statusText);
                     }
                 }
             });

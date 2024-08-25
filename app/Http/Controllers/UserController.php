@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Throwable;
 use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
@@ -28,11 +30,23 @@ class UserController extends Controller
     }
     public function create()
     {
-        $datas["roles"] = Role::orderBy('name', 'ASC')->get();
+        try {
+            $datas["roles"] = Role::orderBy('name', 'ASC')->get();
+        } catch (QueryException $e) {
+            return response()->json([
+                'message' => 'Database Error',
+                'error' => $e->getMessage(),
+            ], 500);
+        } catch (Throwable $e) {
+            return response()->json([
+                'message' => 'Kesalahan Tidak Diketahui',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+
         return response()->json([
-            'success' => true,
             'data' => $datas
-        ]);
+        ], 200);
     }
     public function store(Request $request)
     {
@@ -45,19 +59,22 @@ class UserController extends Controller
             $datas->save();
 
             $datas->assignRole(!blank($request->role) ? $request->role : array());
-
+        } catch (QueryException $e) {
             return response()->json([
-                'success' => true,
-                'message' => 'Data berhasil disimpan',
-                'data' => $request->role
-            ]);
-        } catch (\Throwable $th) {
+                'message' => 'Database Error',
+                'error' => $e->getMessage(),
+            ], 500);
+        } catch (Throwable $e) {
             return response()->json([
-                'success' => false,
-                'message' => 'Data gagal disimpan',
-                'error' => $th->getMessage(),
-            ]);
+                'message' => 'Kesalahan Tidak Diketahui',
+                'error' => $e->getMessage(),
+            ], 500);
         }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data berhasil ditambah'
+        ], 201);
     }
 
     public function update(Request $request)
@@ -71,46 +88,67 @@ class UserController extends Controller
             $datas->update();
 
             $datas->syncRoles(!blank($request->role) ? $request->role : array());
-
+        } catch (QueryException $e) {
             return response()->json([
-                'success' => true,
-                'message' => 'Data berhasil diperbarui'
-            ]);
-        } catch (\Throwable $th) {
+                'message' => 'Database Error',
+                'error' => $e->getMessage(),
+            ], 500);
+        } catch (Throwable $e) {
             return response()->json([
-                'success' => false,
-                'message' => 'Data gagal diperbarui',
-                'error' => $th->getMessage(),
-            ]);
+                'message' => 'Kesalahan Tidak Diketahui',
+                'error' => $e->getMessage(),
+            ], 500);
         }
+        return response()->json([
+            'success' => true,
+            'message' => 'Data berhasil diperbarui'
+        ]);
     }
 
     public function edit($id)
     {
-        $user = User::find($id);
-        $datas['role'] = $user->getRoleNames()->toArray();
-        $datas["roles"] = Role::orderBy('name', 'ASC')->get();
-        $datas["user"] = User::findOrfail($id);
+        try {
+            $user = User::find($id);
+            $datas['role'] = $user->getRoleNames()->toArray();
+            $datas["roles"] = Role::orderBy('name', 'ASC')->get();
+            $datas["user"] = User::findOrfail($id);
+        } catch (QueryException $e) {
+            return response()->json([
+                'message' => 'Database Error',
+                'error' => $e->getMessage(),
+            ], 500);
+        } catch (Throwable $e) {
+            return response()->json([
+                'message' => 'Kesalahan Tidak Diketahui',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+
         return response()->json([
             'success' => true,
             'data' => $datas
-        ]);
+        ], 200);
     }
     public function destroy($id)
     {
         try {
             $datas = User::find($id);
             $datas->delete();
+        } catch (QueryException $e) {
             return response()->json([
-                'success' => true,
-                'message' => 'Data berhasil dihapus'
-            ]);
-        } catch (\Throwable $th) {
+                'message' => 'Database Error',
+                'error' => $e->getMessage(),
+            ], 500);
+        } catch (Throwable $e) {
             return response()->json([
-                'success' => false,
-                'message' => 'Data gagal dihapus',
-                'error' => $th->getMessage(),
-            ]);
+                'message' => 'Kesalahan Tidak Diketahui',
+                'error' => $e->getMessage(),
+            ], 500);
         }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data berhasil dihapus'
+        ], 200);
     }
 }

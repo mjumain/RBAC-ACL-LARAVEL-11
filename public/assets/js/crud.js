@@ -1,4 +1,3 @@
-
 $(function () {
     $('#savedata').click(function (e) {
         e.preventDefault();
@@ -13,17 +12,30 @@ $(function () {
                 success: function (data) {
                     if (data.success == true) {
                         $('#modalForm').modal('hide');
-                        table.draw();
                         $('#savedata').html('Simpan');
+                        table.draw();
                         success(data.message);
                     } else {
                         error(data.message);
-                        // console.log('Error:', data.error);
                     }
                 },
-                error: function (data) {
-                    $('#save').html('Simpan');
-                    // console.log('Error:', data.error);
+                error: function (xhr) {
+                    if (xhr.status == 422) {
+                        var errors = xhr.responseJSON.errors;
+                        var errorMessages = '';
+
+                        const element = document.querySelector('.invalid-feedback');
+                        if (element) {
+                            element.innerHTML = '';
+                        }
+
+                        $('.is-invalid').removeClass('is-invalid');
+                        $.each(errors, function (key, value) {
+                            $('.error-' + key).append(value);
+                            $('#' + key).addClass('is-invalid');
+                            errorMessages += value.join('<br>') + '<br>';
+                        });
+                    }
                 }
             });
         } else if ($(this).val() === 'create') {
@@ -34,20 +46,28 @@ $(function () {
                 type: "POST",
                 dataType: 'json',
                 success: function (response) {
-                    if (response.success == true) {
-                        $('#savedata').html('Simpan');
-                        table.draw();
-                        // success(response.message);
-                        $('#modalForm').modal('hide');
-                    } else {
-                        error(response.message);
-                        console.log('Error:', response.error);
-                    }
-                },
-                error: function (response) {
-                    error(response.error)
                     $('#savedata').html('Simpan');
-                    console.log('Error:', response.error);
+                    $('#modalForm').modal('hide');
+                    table.draw();
+                    success(response.message);
+                },
+                error: function (xhr) {
+                    if (xhr.status == 422) {
+                        var errors = xhr.responseJSON.errors;
+                        var errorMessages = '';
+
+                        const element = document.querySelector('.invalid-feedback');
+                        if (element) {
+                            element.innerHTML = '';
+                        }
+
+                        $('.is-invalid').removeClass('is-invalid');
+                        $.each(errors, function (key, value) {
+                            $('.error-' + key).append(value);
+                            $('#' + key).addClass('is-invalid');
+                            errorMessages += value.join('<br>') + '<br>';
+                        });
+                    }
                 }
             });
         };
@@ -74,21 +94,19 @@ $(function () {
                         _token: `${csrf}`
                     },
                     success: function (data) {
-                        if (data.success == true) {
-                            success(data.message);
-                            table.draw();
-                        } else {
-                            error(data.message);
-                            // console.log('Error:', data.error);
-                        }
+                        table.draw();
+                        success(data.message);
                     },
                     error: function (data) {
-                        error(data.message)
-                        $('#savedata').html('Simpan');
-                        // console.log('Error:', data.error);
+                        if (data.status === 401) {
+                            window.location.href = '401';
+                        } else {
+                            alert('Terjadi kesalahan: ' + data.statusText);
+                        }
                     }
                 });
             }
         });
     });
+
 });

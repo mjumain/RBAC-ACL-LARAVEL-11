@@ -100,33 +100,32 @@
                 type: "GET",
                 dataType: 'json',
                 success: function(data) {
-                    if (data.success == true) {
-                        resetform()
-                        // console.log(data);
-                        $('#savedata').val('edit');
-                        $('#modalForm').modal('show')
-                        $('#dataID').val(data.data.role.id)
-                        $('#name').val(data.data.role.name)
-                        $('#guard_name').val(data.data.role.guard_name)
-                        // console.log(data.data);
-                        var html = ''
-                        data.data.permissions.forEach((element, index, array) => {
-                            var checked = data.data.role_has_permissions.includes(element.id) ?
-                                'checked' : '';
-                            // console.log(checked);
-                            html = html +
-                                '<div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">' +
-                                '<input type="checkbox" ' + checked +
-                                ' name="permissions[]" value="' + element
-                                .name +
-                                '" class="custom-control-input" id="' + element.name + '">' +
-                                '<label class="custom-control-label" for="' + element.name +
-                                '">' + element.name + '</label></div>'
-                        });
-                        document.getElementById("datapermission").innerHTML = html
+                    resetform()
+                    $('#savedata').val('edit');
+                    $('#modalForm').modal('show')
+                    $('#dataID').val(data.data.role.id)
+                    $('#name').val(data.data.role.name)
+                    $('#guard_name').val(data.data.role.guard_name)
+                    var html = ''
+                    data.data.permissions.forEach((element, index, array) => {
+                        var checked = data.data.role_has_permissions.includes(element.id) ?
+                            'checked' : '';
+                        html = html +
+                            '<div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">' +
+                            '<input type="checkbox" ' + checked +
+                            ' name="permissions[]" value="' + element
+                            .name +
+                            '" class="custom-control-input" id="' + element.name + '">' +
+                            '<label class="custom-control-label" for="' + element.name +
+                            '">' + element.name + '</label></div>'
+                    });
+                    document.getElementById("datapermission").innerHTML = html
+                },
+                error: function(data) {
+                    if (data.status === 401) {
+                        window.location.href = '401';
                     } else {
-                        resetform();
-                        window.location.href = "401";
+                        alert('Terjadi kesalahan: ' + data.statusText);
                     }
                 }
             });
@@ -138,26 +137,26 @@
                 type: "GET",
                 dataType: 'json',
                 success: function(data) {
-                    if (data.success == true) {
-                        resetform()
-                        // console.log(data.data);
-                        var html = ''
-                        data.data.forEach((element, index, array) => {
-                            html = html +
-                                '<div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">' +
-                                '<input type="checkbox" name="permissions[]" value="' + element
-                                .name + '" class="custom-control-input" id="' + element.name +
-                                '">' +
-                                '<label class="custom-control-label" for="' + element.name +
-                                '">' + element.name + '</label>' +
-                                '</div>'
-                        });
-                        document.getElementById("datapermission").innerHTML = html
+                    resetform()
+                    var html = ''
+                    data.data.forEach((element, index, array) => {
+                        html = html +
+                            '<div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">' +
+                            '<input type="checkbox" name="permissions[]" value="' + element
+                            .name + '" class="custom-control-input" id="' + element.name +
+                            '">' +
+                            '<label class="custom-control-label" for="' + element.name +
+                            '">' + element.name + '</label>' +
+                            '</div>'
+                    });
+                    document.getElementById("datapermission").innerHTML = html
+                },
+                error: function(data) {
+                    if (data.status === 401) {
+                        window.location.href = '401';
                     } else {
-                        resetform();
-                        window.location.href = "401";
+                        alert('Terjadi kesalahan: ' + data.statusText);
                     }
-
                 }
             });
         });

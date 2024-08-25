@@ -50,8 +50,10 @@
                         <input type="text" class="form-control" id="dataID" name="id" value="" hidden>
                         <div class="form-group">
                             <label>Permission Name</label>
-                            <input type="email" class="form-control" id="name" name="name"
+                            <input type="text" class="form-control" id="name" name="name"
                                 placeholder="Permission Name">
+                            <div class="invalid-feedback error-name">
+                            </div>
                         </div>
                         <div class="form-group" id="permission">
                             <div class="row">
@@ -95,7 +97,10 @@
                                         <label class="custom-control-label" for="customSwitch6">Delete</label>
                                     </div>
                                 </div>
+
                             </div>
+                        </div>
+                        <div class="invalid-feedback error-permission">
                         </div>
                     </form>
                 </div>
@@ -128,6 +133,24 @@
             $('#permission').show();
         }
 
+        $('body').on('click', '#tambahdata', function() {
+            $.ajax({
+                url: `/${url}/create`,
+                type: "GET",
+                dataType: 'json',
+                success: function(response) {
+                    resetform();
+                },
+                error: function(response) {
+                    if (response.status === 401) {
+                        window.location.href = '401';
+                    } else {
+                        alert('Terjadi kesalahan: ' + response.statusText);
+                    }
+                }
+            });
+        });
+
         $('body').on('click', '.editdata', function() {
             var id = $(this).data('id');
             $.ajax({
@@ -135,33 +158,18 @@
                 type: "GET",
                 dataType: 'json',
                 success: function(data) {
-                    if (data.success == true) {
-                        resetform()
-
-                        $('#savedata').val('edit');
-                        $('#modalForm').modal('show')
-                        $('#dataID').val(data.data.id)
-                        $('#name').val(data.data.name)
-                        $('#permission').hide();
+                    resetform()
+                    $('#savedata').val('edit');
+                    $('#modalForm').modal('show')
+                    $('#dataID').val(data.data.id)
+                    $('#name').val(data.data.name)
+                    $('#permission').hide();
+                },
+                error: function(data) {
+                    if (data.status === 401) {
+                        window.location.href = '401';
                     } else {
-                        resetform();
-                        window.location.href = "401";
-                    }
-                }
-            });
-        });
-
-        $('body').on('click', '#tambahdata', function() {
-            $.ajax({
-                url: `/${url}/create`,
-                type: "GET",
-                dataType: 'json',
-                success: function(response) {
-                    if (response.success == true) {
-                        resetform()
-                    } else {
-                        resetform();
-                        window.location.href = "401";
+                        alert('Terjadi kesalahan: ' + data.statusText);
                     }
                 }
             });

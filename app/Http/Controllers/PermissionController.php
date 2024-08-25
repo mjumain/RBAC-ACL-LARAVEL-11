@@ -2,8 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PermissionEditRequest;
+use App\Http\Requests\PermissionRequest;
+use Exception;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Permission;
+use Throwable;
 use Yajra\DataTables\DataTables;
 
 class PermissionController extends Controller
@@ -24,7 +32,7 @@ class PermissionController extends Controller
         }
         return view('permissions.index');
     }
-    public function store(Request $request)
+    public function store(PermissionRequest $request)
     {
         try {
             if (!empty($request->permission) > 0) {
@@ -35,74 +43,95 @@ class PermissionController extends Controller
                     $model->guard_name = $guard_name;
                     $model->save();
                 }
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Data berhasil ditambah'
-                ]);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Data gagal ditambah',
-                ]);
             }
-        } catch (\Throwable $th) {
+        } catch (QueryException $e) {
             return response()->json([
-                'success' => false,
-                'message' => 'Data gagal ditambah',
-                'error' => $th->getMessage(),
-            ]);
+                'message' => 'Database Error',
+                'error' => $e->getMessage(),
+            ], 500);
+        } catch (Throwable $e) {
+            return response()->json([
+                'message' => 'Kesalahan Tidak Diketahui',
+                'error' => $e->getMessage(),
+            ], 500);
         }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data berhasil ditambah'
+        ], 201);
     }
 
     public function create()
     {
-        return response()->json([
-            'success' => true,
-        ]);
+        return Response::HTTP_OK;
     }
 
-    public function update(Request $request)
+    public function update(PermissionEditRequest $request)
     {
         try {
             $datas = Permission::findOrFail($request->id);
             $datas->name = $request->name;
             $datas->update();
+        } catch (QueryException $e) {
             return response()->json([
-                'success' => true,
-                'message' => 'Data berhasil diperbarui'
-            ]);
-        } catch (\Throwable $th) {
+                'message' => 'Database Error',
+                'error' => $e->getMessage(),
+            ], 500);
+        } catch (Throwable $e) {
             return response()->json([
-                'success' => false,
-                'message' => 'Data gagal ditambah',
-                'error' => $th->getMessage(),
-            ]);
+                'message' => 'Kesalahan Tidak Diketahui',
+                'error' => $e->getMessage(),
+            ], 500);
         }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data berhasil diperbarui'
+        ], 200);
     }
 
     public function edit($id)
     {
-        $datas = Permission::findOrFail($id);
+        try {
+            $datas = Permission::findOrFail($id);
+        } catch (QueryException $e) {
+            return response()->json([
+                'message' => 'Database Error',
+                'error' => $e->getMessage(),
+            ], 500);
+        } catch (Throwable $e) {
+            return response()->json([
+                'message' => 'Kesalahan Tidak Diketahui',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+
         return response()->json([
             'success' => true,
             'data' => $datas
-        ]);
+        ], 200);
     }
     public function destroy($id)
     {
         try {
             $datas = Permission::find($id);
             $datas->delete();
+        } catch (QueryException $e) {
             return response()->json([
-                'success' => true,
-                'message' => 'Data berhasil dihapus'
-            ]);
-        } catch (\Throwable $th) {
+                'message' => 'Database Error',
+                'error' => $e->getMessage(),
+            ], 500);
+        } catch (Throwable $e) {
             return response()->json([
-                'success' => false,
-                'message' => 'Data gagal dihapus',
-                'error' => $th->getMessage(),
-            ]);
+                'message' => 'Kesalahan Tidak Diketahui',
+                'error' => $e->getMessage(),
+            ], 500);
         }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data berhasil dihapus'
+        ], 200);
     }
 }

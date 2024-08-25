@@ -99,35 +99,40 @@
                 type: "GET",
                 dataType: 'json',
                 success: function(response) {
-                    if (response.success == true) {
-                        resetform()
-                        // console.log(response.data.role);
-                        $('#savedata').val('edit')
-                        $('#modalForm').modal('show')
-                        $('#dataID').val(response.data.user.id)
-                        $('#name').val(response.data.user.name)
-                        $('#email').val(response.data.user.email)
+                    resetform()
+                    // console.log(response.data.role);
+                    $('#savedata').val('edit')
+                    $('#modalForm').modal('show')
+                    $('#dataID').val(response.data.user.id)
+                    $('#name').val(response.data.user.name)
+                    $('#email').val(response.data.user.email)
 
-                        $('#datarole').empty();
-                        var html = ''
-                        response.data.roles.forEach((element, index, array) => {
-                            if (element.name) {
-                                var checked = response.data.role.includes(element
-                                        .name) ?
-                                    'checked' : '';
-                                html = html +
-                                    '<div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">' +
-                                    '<input type="checkbox" ' + checked +
-                                    ' name="role[]" value="' + element
-                                    .name +
-                                    '" class="custom-control-input" id="' +
-                                    element.name + '">' +
-                                    '<label class="custom-control-label" for="' + element.name +
-                                    '">' + element.name +
-                                    '</label></div>'
-                            }
-                        });
-                        $('#datarole').append(html);
+                    $('#datarole').empty();
+                    var html = ''
+                    response.data.roles.forEach((element, index, array) => {
+                        if (element.name) {
+                            var checked = response.data.role.includes(element
+                                    .name) ?
+                                'checked' : '';
+                            html = html +
+                                '<div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">' +
+                                '<input type="checkbox" ' + checked +
+                                ' name="role[]" value="' + element
+                                .name +
+                                '" class="custom-control-input" id="' +
+                                element.name + '">' +
+                                '<label class="custom-control-label" for="' + element.name +
+                                '">' + element.name +
+                                '</label></div>'
+                        }
+                    });
+                    $('#datarole').append(html);
+                },
+                error: function(data) {
+                    if (data.status === 401) {
+                        window.location.href = '401';
+                    } else {
+                        alert('Terjadi kesalahan: ' + data.statusText);
                     }
                 }
             });
@@ -139,7 +144,6 @@
                 type: "GET",
                 dataType: 'json',
                 success: function(response) {
-                    // console.log(response.data);
                     resetform()
                     $('#datarole').empty();
                     var html = ''
@@ -156,6 +160,13 @@
                         }
                     });
                     $('#datarole').append(html);
+                },
+                error: function(data) {
+                    if (data.status === 401) {
+                        window.location.href = '401';
+                    } else {
+                        alert('Terjadi kesalahan: ' + data.statusText);
+                    }
                 }
             });
         });

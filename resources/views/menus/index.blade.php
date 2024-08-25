@@ -58,7 +58,8 @@
                                 placeholder="Menu Name">
                         </div>
                         <div class="form-group">
-                            <label>Menu Icon <code><a href="https://fontawesome.com/v5/search?q=home&o=r&m=free" target="_blank" rel="noopener noreferrer">Daftar icon</a></code></label>
+                            <label>Menu Icon <code><a href="https://fontawesome.com/v5/search?q=home&o=r&m=free"
+                                        target="_blank" rel="noopener noreferrer">Daftar icon</a></code></label>
                             <input type="email" class="form-control" id="icon" name="icon"
                                 placeholder="Menu Icon">
                         </div>
@@ -114,46 +115,48 @@
                 type: "GET",
                 dataType: 'json',
                 success: function(response) {
-                    if (response.success == true) {
-                        resetform()
-                        // console.log(response.data);
-                        $('#savedata').val('edit');
-                        $('#modalForm').modal('show')
-                        $('#dataID').val(response.data.menu.id)
-                        $('#name').val(response.data.menu.name)
-                        $('#icon').val(response.data.menu.icon)
+                    resetform()
+                    // console.log(response.data);
+                    $('#savedata').val('edit');
+                    $('#modalForm').modal('show')
+                    $('#dataID').val(response.data.menu.id)
+                    $('#name').val(response.data.menu.name)
+                    $('#icon').val(response.data.menu.icon)
 
-                        var html = '<option value="#">#</option>'
-                        response.data.routes.forEach((element, index, array) => {
-                            if (element.action.as) {
-                                var checked = (element.action.as == response.data.menu.route) ?
-                                    'selected' : '';
-                                html = html +
-                                    '<option ' + checked + ' value="' + element.action.as +
-                                    '">' + element
-                                    .action.as +
-                                    '</option>'
+                    var html = '<option value="#">#</option>'
+                    response.data.routes.forEach((element, index, array) => {
+                        if (element.action.as) {
+                            var checked = (element.action.as == response.data.menu.route) ?
+                                'selected' : '';
+                            html = html +
+                                '<option ' + checked + ' value="' + element.action.as +
+                                '">' + element
+                                .action.as +
+                                '</option>'
 
-                            }
-                        });
-                        $('#dataroute').append(html);
+                        }
+                    });
+                    $('#dataroute').append(html);
 
-                        var html = '<option value="0">PARENT MENU</option>'
-                        response.data.menus.forEach((element, index, array) => {
-                            if (element.name) {
-                                var checked = (element.id == response.data.menu.parent_id) ?
-                                    'selected' : '';
-                                html = html +
-                                    '<option ' + checked + ' value="' + element.id + '">' +
-                                    element.name +
-                                    '</option>'
+                    var html = '<option value="0">PARENT MENU</option>'
+                    response.data.menus.forEach((element, index, array) => {
+                        if (element.name) {
+                            var checked = (element.id == response.data.menu.parent_id) ?
+                                'selected' : '';
+                            html = html +
+                                '<option ' + checked + ' value="' + element.id + '">' +
+                                element.name +
+                                '</option>'
 
-                            }
-                        });
-                        $('#dataparent').append(html);
+                        }
+                    });
+                    $('#dataparent').append(html);
+                },
+                error: function(data) {
+                    if (data.status === 401) {
+                        window.location.href = '401';
                     } else {
-                        resetform();
-                        window.location.href = "401";
+                        alert('Terjadi kesalahan: ' + data.statusText);
                     }
                 }
             });
@@ -165,36 +168,38 @@
                 type: "GET",
                 dataType: 'json',
                 success: function(response) {
-                    if (response.success == true) {
-                        resetform();
+                    resetform();
 
-                        var html = '<option value="#">#</option>'
-                        console.log(response.data.routes);
-                        response.data.routes.forEach((element, index, array) => {
-                            if (element.action.as) {
-                                html = html +
-                                    '<option value="' + element.action.as + '">' + element
-                                    .action
-                                    .as +
-                                    '</option>'
+                    var html = '<option value="#">#</option>'
+                    console.log(response.data.routes);
+                    response.data.routes.forEach((element, index, array) => {
+                        if (element.action.as) {
+                            html = html +
+                                '<option value="' + element.action.as + '">' + element
+                                .action
+                                .as +
+                                '</option>'
 
-                            }
-                        });
-                        $('#dataroute').append(html);
+                        }
+                    });
+                    $('#dataroute').append(html);
 
-                        var html = '<option value="0">PARENT MENU</option>'
-                        response.data.menus.forEach((element, index, array) => {
-                            if (element.name) {
-                                html = html +
-                                    '<option value="' + element.id + '">' + element.name +
-                                    '</option>'
+                    var html = '<option value="0">PARENT MENU</option>'
+                    response.data.menus.forEach((element, index, array) => {
+                        if (element.name) {
+                            html = html +
+                                '<option value="' + element.id + '">' + element.name +
+                                '</option>'
 
-                            }
-                        });
-                        $('#dataparent').append(html);
+                        }
+                    });
+                    $('#dataparent').append(html);
+                },
+                error: function(data) {
+                    if (data.status === 401) {
+                        window.location.href = '401';
                     } else {
-                        resetform();
-                        window.location.href = "401";
+                        alert('Terjadi kesalahan: ' + data.statusText);
                     }
                 }
             });
