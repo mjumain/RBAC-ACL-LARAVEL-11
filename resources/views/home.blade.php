@@ -9,19 +9,75 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            <div class="card card-primary card-outline">
-                <div class="card-header d-flex p-0">
-                    <h1 class="card-title p-3">Data Role Pengguna</h1>
-                    <ul class="nav nav-pills ml-auto p-2">
-                        <li class="nav-item"><a class="nav-link active btn-sm" href="#" data-toggle="modal"
-                                data-target="#modal-form">Tambah Data</a></li>
-                    </ul>
-                </div><!-- /.card-header -->
-                <div class="card-body">
+            @role('admin')
+                <div class="card card-primary card-outline">
+                    <div class="card-header d-flex p-0">
+                        <h1 class="card-title p-3">Data Role Pengguna</h1>
+                        <ul class="nav nav-pills ml-auto p-2">
+                            <li class="nav-item"><a class="nav-link active btn-sm" href="#" data-toggle="modal"
+                                    data-target="#modal-form">Tambah Data</a></li>
+                        </ul>
+                    </div><!-- /.card-header -->
+                    <div class="card-body">
+                        {{ count($permissions) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-6">
 
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <h3>{{ count($permissions) }}</h3>
+                                <p>Permissions</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <h3>{{ count($roles) }}</h3>
+                                <p>Roles</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <h3>{{ count($users) }}</h3>
+                                <p>Users</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <h3>{{ count($menus) }}</h3>
+                                <p>Menus</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endrole
     </div>
 @endsection
 @push('js')

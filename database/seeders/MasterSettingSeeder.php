@@ -17,7 +17,7 @@ class MasterSettingSeeder extends Seeder
     public function run(): void
     {
         $users = [
-            ['name' => 'Super Admin', 'email' => 'admin@admin.com', 'password' => bcrypt('password')],
+            ['name' => 'Administrator', 'email' => 'admin@admin.com', 'password' => bcrypt('password')],
         ];
         User::insert($users);
 
@@ -56,16 +56,16 @@ class MasterSettingSeeder extends Seeder
         Permission::insert($permissions);
 
         $roles = [
-            ['name' => 'admin', 'guard_name' => 'web'],
+            ['name' => 'superadmin', 'guard_name' => 'web'],
         ];
         $permission = Permission::all();
         Role::insert($roles);
 
-        $role = Role::findByName('admin');
+        $role = Role::findByName('superadmin');
         $role->syncPermissions($permission);
 
         $user = User::find(1);
-        $user->assignRole('admin');
+        $user->assignRole('superadmin');
 
         $menus = [
             ['name' => 'Settings', 'icon' => '<i class="nav-icon fas fa-cogs"></i>', 'parent_id' => '0', 'posision' => '0', 'route' => '#'],

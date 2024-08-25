@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Helpers\MenuHelper;
+use App\Models\Menu;
 use App\Models\Route;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route as FacadesRoute;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class HomeController extends Controller
@@ -29,8 +31,10 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        // dd(MenuHelper::Menu());
-       
-        return view('home');
+        $data['roles'] = Role::all();
+        $data['permissions'] = Permission::all();
+        $data['users'] = User::all();
+        $data['menus'] = Menu::all();
+        return view('home')->with($data);
     }
 }
