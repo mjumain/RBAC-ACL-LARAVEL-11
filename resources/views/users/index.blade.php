@@ -25,7 +25,8 @@
                             <tr>
                                 <th>No</th>
                                 <th>Name</th>
-                                <th>Email</th>
+                                <th>Email</th> 
+                                <th>Role</th> 
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -188,6 +189,10 @@
                     name: 'email'
                 },
                 {
+                    data: 'role',
+                    name: 'role'
+                },
+                {
                     data: 'action',
                     name: 'action',
                     orderable: false,
@@ -200,7 +205,7 @@
                 },
                 {
                     width: '80px',
-                    targets: 3,
+                    targets: 4,
                     className: 'dt-center'
                 }
             ]

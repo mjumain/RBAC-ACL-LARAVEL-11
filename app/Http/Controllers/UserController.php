@@ -23,7 +23,14 @@ class UserController extends Controller
                     $btn = $btn . ' <a href="javascript:void(0)" data-id="' . $row->id . '" class="btn btn-danger btn-sm btn-icon deleteData"><i class="fas fa-trash-alt"></i></a>';
                     return $btn;
                 })
-                ->rawColumns(['action'])
+                ->addColumn('role', function ($row) {
+                    $role = '';
+                    foreach ($row->roles as $value) {
+                        $role = $role . '<span class="badge badge-primary">' . strtolower($value["name"]) . '</span> ';
+                    }
+                    return $role;
+                })
+                ->rawColumns(['action', 'role'])
                 ->make(true);
         }
         return view('users.index');
