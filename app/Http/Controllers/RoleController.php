@@ -24,7 +24,15 @@ class RoleController extends Controller
                     $btn = $btn . ' <a href="javascript:void(0)" data-id="' . $row->id . '" class="btn btn-danger btn-sm btn-icon deleteData"><i class="fas fa-trash-alt"></i></a>';
                     return $btn;
                 })
-                ->rawColumns(['action'])
+                ->addColumn('permission', function ($row) {
+                    $permission = '';
+                    foreach ($row->permissions as $value) {
+                        $permission = $permission . '<span class="badge badge-primary">' . strtolower($value["name"]) . '</span> ';
+                    }
+
+                    return $permission;
+                })
+                ->rawColumns(['action', 'permission'])
                 ->make(true);
         }
         return view('roles.index');
@@ -66,7 +74,7 @@ class RoleController extends Controller
         try {
             $datas = Role::findOrFail($request->id);
             $datas->name = $request->name;
-            $datas->guard_name = $request->guard_name;
+            $datas->guard_name = empty($request->guard_name) ? 'web' : $request->guard_name;
             $datas->update();
 
             $datas->syncPermissions(!blank($request->permissions) ? $request->permissions : array());

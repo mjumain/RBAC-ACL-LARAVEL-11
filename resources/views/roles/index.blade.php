@@ -23,7 +23,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Role Name</th>
-                                <th>Guard Name</th>
+                                <th>Permissions</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -174,8 +174,8 @@
                     name: 'name'
                 },
                 {
-                    data: 'guard_name',
-                    name: 'guard_name'
+                    data: 'permission',
+                    name: 'permission'
                 },
                 {
                     data: 'action',
@@ -189,7 +189,11 @@
                     targets: 0
                 },
                 {
-                    width: '120px',
+                    width: '90px',
+                    targets: 1
+                },
+                {
+                    width: '80px',
                     targets: 3,
                     className: 'dt-center'
                 }
