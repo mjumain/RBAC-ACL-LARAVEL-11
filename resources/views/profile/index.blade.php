@@ -14,15 +14,14 @@
             <div class="card card-primary card-outline">
                 <div class="card-header d-flex p-0">
                     <h1 class="card-title p-3">Profil Pengguna</h1>
-                </div><!-- /.card-header -->
+                </div>
                 <div class="card-body">
-
                 </div>
             </div>
             <div class="card card-primary card-outline">
                 <div class="card-header d-flex p-0">
                     <h1 class="card-title p-3">Ganti Password</h1>
-                </div><!-- /.card-header -->
+                </div>
                 <div class="card-body">
                     <form action="" id="formdatapassword">
                         @csrf

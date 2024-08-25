@@ -9,7 +9,7 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            @role('admin')
+            @role('superadmin')
                 <div class="card card-primary card-outline">
                     <div class="card-header d-flex p-0">
                         <h1 class="card-title p-3">Data Role Pengguna</h1>
@@ -76,8 +76,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        @endrole
+            @endrole
+        </div>
     </div>
 @endsection
 @push('js')
