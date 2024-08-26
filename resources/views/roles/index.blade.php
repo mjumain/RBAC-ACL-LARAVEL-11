@@ -133,7 +133,7 @@
 
         $('body').on('click', '#tambahdata', function() {
             $.ajax({
-                url: "{{ route('permissions.index') }}",
+                url: `/${url}/create`,
                 type: "GET",
                 dataType: 'json',
                 success: function(data) {
