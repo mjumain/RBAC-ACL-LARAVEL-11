@@ -45,10 +45,14 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" id="formdata">
+                    <form action="" id="formdata" enctype="multipart/form-data">
                         @csrf
                         <input type="text" class="form-control" id="dataID" name="id" placeholder="Role Name"
                             value="" hidden>
+                        <div class="form-group">
+                            <label>File</label>
+                            <input type="file" name="berkas" id="">
+                        </div>
                         <div class="form-group">
                             <label>Role Name</label>
                             <input type="email" class="form-control" id="name" name="name"
@@ -139,7 +143,7 @@
                 success: function(data) {
                     resetform()
                     var html = ''
-                    data.data.forEach((element, index, array) => {
+                    data.data.permissions.forEach((element, index, array) => {
                         html = html +
                             '<div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">' +
                             '<input type="checkbox" name="permissions[]" value="' + element

@@ -38,8 +38,7 @@
             <div class="float-right d-none d-sm-inline">
                 Versi 24.8.1
             </div>
-            Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>. All rights
-            reserved.
+            Copyright &copy; 2024
         </footer>
     </div>
     <script src="{{ asset('') }}assets/plugins/jquery/jquery.min.js"></script>

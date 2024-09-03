@@ -1,23 +1,26 @@
 $(function () {
     $('#savedata').click(function (e) {
         e.preventDefault();
+        let formData = new FormData($('#formdata')[0]);
         if ($(this).val() === 'edit') {
             var id = $('#dataID').val();
+
+            formData.append('_method', 'PUT');
+
             $(this).html('Mohon tunggu . . .!!');
             $.ajax({
-                data: $('#formdata').serialize(),
                 url: `/${url}/${id}`,
-                type: "PUT",
-                dataType: 'json',
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
                 success: function (data) {
-                    if (data.success == true) {
-                        $('#modalForm').modal('hide');
-                        $('#savedata').html('Simpan');
-                        table.draw();
-                        success(data.message);
-                    } else {
-                        error(data.message);
-                    }
+                    console.log(data);
+
+                    $('#modalForm').modal('hide');
+                    $('#savedata').html('Simpan');
+                    table.draw();
+                    success(data.message);
                 },
                 error: function (xhr) {
                     if (xhr.status == 422) {
@@ -41,11 +44,14 @@ $(function () {
         } else if ($(this).val() === 'create') {
             $(this).html('Mohon tunggu . . .!!');
             $.ajax({
-                data: $('#formdata').serialize(),
+                data: formData,
                 url: `/${url}`,
                 type: "POST",
-                dataType: 'json',
+                contentType: false,
+                processData: false,
                 success: function (response) {
+                    console.log(response);
+
                     $('#savedata').html('Simpan');
                     $('#modalForm').modal('hide');
                     table.draw();

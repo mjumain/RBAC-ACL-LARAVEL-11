@@ -66,7 +66,11 @@ class RoleController extends Controller
     }
     public function create()
     {
-        return Response::HTTP_OK;
+        $datas["permissions"] = Permission::orderBy('name', 'ASC')->get();
+        return response()->json([
+            'success' => true,
+            'data' => $datas
+        ], 200);
     }
 
     public function update(Request $request)

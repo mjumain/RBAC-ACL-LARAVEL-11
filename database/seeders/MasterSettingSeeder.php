@@ -31,7 +31,7 @@ class MasterSettingSeeder extends Seeder
             ['name' => 'role-store', 'guard_name' => 'web'],
             ['name' => 'role-index', 'guard_name' => 'web'],
             ['name' => 'role-create', 'guard_name' => 'web'],
-            ['name' => 'role-uodate', 'guard_name' => 'web'],
+            ['name' => 'role-update', 'guard_name' => 'web'],
             ['name' => 'role-edit', 'guard_name' => 'web'],
             ['name' => 'role-delete', 'guard_name' => 'web'],
             ['name' => 'menu-store', 'guard_name' => 'web'],
