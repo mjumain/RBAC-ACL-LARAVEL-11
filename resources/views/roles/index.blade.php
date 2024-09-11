@@ -16,7 +16,7 @@
                         <li class="nav-item"><a class="nav-link active btn-sm" id="tambahdata" href="#"
                                 data-toggle="modal" data-target="#modalForm">Tambah Data</a></li>
                     </ul>
-                </div><!-- /.card-header -->
+                </div>
                 <div class="card-body">
                     <table class="table table-bordered table-striped data-table" style="width: 100%">
                         <thead>
@@ -49,10 +49,6 @@
                         @csrf
                         <input type="text" class="form-control" id="dataID" name="id" placeholder="Role Name"
                             value="" hidden>
-                        <div class="form-group">
-                            <label>File</label>
-                            <input type="file" name="berkas" id="">
-                        </div>
                         <div class="form-group">
                             <label>Role Name</label>
                             <input type="email" class="form-control" id="name" name="name"

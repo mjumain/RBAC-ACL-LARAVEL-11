@@ -15,11 +15,9 @@ $(function () {
                 contentType: false,
                 processData: false,
                 success: function (data) {
-                    console.log(data);
-
                     $('#modalForm').modal('hide');
                     $('#savedata').html('Simpan');
-                    table.draw();
+                    table.ajax.reload(null, false);
                     success(data.message);
                 },
                 error: function (xhr) {
@@ -50,11 +48,9 @@ $(function () {
                 contentType: false,
                 processData: false,
                 success: function (response) {
-                    console.log(response);
-
                     $('#savedata').html('Simpan');
                     $('#modalForm').modal('hide');
-                    table.draw();
+                    table.ajax.reload(null, false);
                     success(response.message);
                 },
                 error: function (xhr) {
@@ -100,7 +96,7 @@ $(function () {
                         _token: `${csrf}`
                     },
                     success: function (data) {
-                        table.draw();
+                        table.ajax.reload(null, false);
                         success(data.message);
                     },
                     error: function (data) {

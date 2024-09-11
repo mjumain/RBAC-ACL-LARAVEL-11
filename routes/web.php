@@ -11,11 +11,13 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::permanentRedirect('/','/login');
 
-Auth::routes();
+Auth::routes([
+    'register' => false, // Registration Routes...
+    'reset' => false, // Password Reset Routes...
+    'verify' => false, // Email Verification Routes...
+]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/profile', [ProfileController::class, 'index'])->middleware('auth');
@@ -27,4 +29,8 @@ Route::group(['middleware' => ['auth', 'cekakses']], function () {
     Route::resource('users', UserController::class)->except('show');
     Route::resource('menus', MenuController::class)->except('show');
     Route::get('401', [ErrorController::class, 'error401']);
+
+
+
+    Route::resource('tagihan', TagihanController::class)->except('show');
 });
